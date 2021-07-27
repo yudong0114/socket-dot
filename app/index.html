@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Socket.IOの練習</title>
+</head>
+<body>
+    <form id="myForm">
+        <input type="text" id="msg">
+        <input type="submit" value="Send">
+    </form>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Socket.IOのモジュール読み込み時に以下のJSが自動生成される -->
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        $(function(){
+            // socketを使用
+            let socket = io.connect();
+            // emit： イベントを発信
+            // on: イベントを待ち受ける
+            $('#myForm').submit(function(){
+                // イベントの名前をつけて、#msgを送信する
+                socket.emit('emit_from_client', $('#msg').val());
+            });
+        })
+    </script>
+    
+</body>
+</html>
