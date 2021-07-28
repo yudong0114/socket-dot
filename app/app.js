@@ -34,7 +34,6 @@ io.sockets.on('connection', function(socket){
     // socket.client_name = data.name;
     // 接続しているソケット全部
     // io.sockets.emit('emit_from_server',  '[' + socket.client_name + ']' + data.msg);
-
     // ルーム機能
     // ルームの名前をソケットに割り当て
     socket.join(data.room);
@@ -44,4 +43,9 @@ io.sockets.on('connection', function(socket){
     io.sockets.to(data.room).emit('emit_from_server', data.msg);
 
   });
+});
+
+// news用の名前空間
+let news = io.of('/news').on('connection', function(socket){
+  socket.emit('emit_from_server', 'today: ' + new Date());
 });

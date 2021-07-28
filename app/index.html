@@ -18,6 +18,7 @@
     <ul id="logs">
         <li>ログ</li>
     </ul>
+    <div id="news"></div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Socket.IOのモジュール読み込み時に以下のJSが自動生成される -->
     <script src="/socket.io/socket.io.js"></script>
@@ -25,6 +26,8 @@
         $(function(){
             // socketを使用
             let socket = io.connect();
+            // let chat = io.connect('http://localhost:8080/chat'),
+            //     news = io.connect('http://localhost:8080/news');
             // emit： イベントを発信
             // on: イベントを待ち受ける
             $('#myForm').submit(function(e){
@@ -42,7 +45,10 @@
             socket.on('emit_from_server', function(data) {
                 $('#logs').append('<li>'+data+'</li>');
             });
-
+            // // newsのイベント受け取り
+            // news.on('emit_from_server', function(data) {
+            //     $('#news').text(data);
+            // });
         })
     </script>
     
