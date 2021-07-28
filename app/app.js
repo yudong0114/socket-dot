@@ -24,14 +24,24 @@ function handler(req, res) {
 // イベントを受ける：connectionイベントで受ける
 io.sockets.on('connection', function(socket){
   socket.on('emit_from_client', function(data){
+    // チャット機能
     // console.log(data);
     // サーバーからemit(発信) -> socket.emit -> 接続しているソケットのみ
     // socket.emit('emit_from_server', 'hello from server ' + data);
     // socket.broadcast.emit -> 接続しているソケット以外全部
     // socket.broadcast.emit('emit_from_server',  'hello from server ' + data);
     // 名前のセット
-    socket.client_name = data.name;
+    // socket.client_name = data.name;
     // 接続しているソケット全部
-    io.sockets.emit('emit_from_server',  '[' + socket.client_name + ']' + data.msg);
+    // io.sockets.emit('emit_from_server',  '[' + socket.client_name + ']' + data.msg);
+
+    // ルーム機能
+    // ルームの名前をソケットに割り当て
+    socket.join(data.room);
+    // 自分がどこのルームか表示
+    socket.emit('emit_from_server', 'in ' + data.room);
+    // 自分がいるルームにブロードキャスト
+    io.sockets.to(data.room).emit('emit_from_server', data.msg);
+
   });
 });
