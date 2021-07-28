@@ -25,7 +25,11 @@ function handler(req, res) {
 io.sockets.on('connection', function(socket){
   socket.on('emit_from_client', function(data){
     // console.log(data);
-    // サーバーからemit(発信)
-    socket.emit('emit_from_server', 'hello from server ' + data);
+    // サーバーからemit(発信) -> socket.emit -> 接続しているソケットのみ
+    // socket.emit('emit_from_server', 'hello from server ' + data);
+    // socket.broadcast.emit -> 接続しているソケット以外全部
+    // socket.broadcast.emit('emit_from_server',  'hello from server ' + data);
+    // 接続しているソケット全部
+    io.sockets.emit('emit_from_server',  '[' + socket.id + ']' + data);
   })
 })
