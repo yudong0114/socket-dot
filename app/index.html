@@ -11,6 +11,9 @@
         <input type="text" id="msg">
         <input type="submit" value="Send">
     </form>
+    <ul id="logs">
+        <li>ログ</li>
+    </ul>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Socket.IOのモジュール読み込み時に以下のJSが自動生成される -->
     <script src="/socket.io/socket.io.js"></script>
@@ -20,10 +23,18 @@
             let socket = io.connect();
             // emit： イベントを発信
             // on: イベントを待ち受ける
-            $('#myForm').submit(function(){
+            $('#myForm').submit(function(e){
+                e.preventDefault();
                 // イベントの名前をつけて、#msgを送信する
                 socket.emit('emit_from_client', $('#msg').val());
+                // 送信後空にする
+                $('#msg').val('').focus();
             });
+            // イベントの受け取り
+            socket.on('emit_from_server', function(data) {
+                $('#logs').append('<li>'+data+'</li>');
+            });
+
         })
     </script>
     

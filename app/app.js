@@ -24,6 +24,8 @@ function handler(req, res) {
 // イベントを受ける：connectionイベントで受ける
 io.sockets.on('connection', function(socket){
   socket.on('emit_from_client', function(data){
-    console.log(data);
+    // console.log(data);
+    // サーバーからemit(発信)
+    socket.emit('emit_from_server', 'hello from server ' + data);
   })
 })
