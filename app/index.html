@@ -8,6 +8,7 @@
 </head>
 <body>
     <form id="myForm">
+        <input type="text" id="name">
         <input type="text" id="msg">
         <input type="submit" value="Send">
     </form>
@@ -26,7 +27,11 @@
             $('#myForm').submit(function(e){
                 e.preventDefault();
                 // イベントの名前をつけて、#msgを送信する
-                socket.emit('emit_from_client', $('#msg').val());
+                socket.emit('emit_from_client', {
+                    msg: $('#msg').val(),
+                    name: $('#name').val()
+                });
+
                 // 送信後空にする
                 $('#msg').val('').focus();
             });

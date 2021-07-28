@@ -29,7 +29,9 @@ io.sockets.on('connection', function(socket){
     // socket.emit('emit_from_server', 'hello from server ' + data);
     // socket.broadcast.emit -> 接続しているソケット以外全部
     // socket.broadcast.emit('emit_from_server',  'hello from server ' + data);
+    // 名前のセット
+    socket.client_name = data.name;
     // 接続しているソケット全部
-    io.sockets.emit('emit_from_server',  '[' + socket.id + ']' + data);
-  })
-})
+    io.sockets.emit('emit_from_server',  '[' + socket.client_name + ']' + data.msg);
+  });
+});
